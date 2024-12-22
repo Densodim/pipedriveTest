@@ -5,7 +5,7 @@ const path = require("node:path");
 require('dotenv').config();
 
 const app = express();
-const PORT = 1800;
+const PORT = 3000;
 
 // Настройка body-parser для обработки данных
 app.use(bodyParser.json());
@@ -74,3 +74,5 @@ app.get('/api', async (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server run PORT: ${PORT}`);
 });
+
+module.exports = app;
