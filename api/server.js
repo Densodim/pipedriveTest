@@ -9,7 +9,8 @@ const PORT = 3000;
 
 // Настройка body-parser для обработки данных
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../public')));
+app.use(express.json());
 
 app.post('/save-deal', async (req, res) => {
     try {
@@ -41,7 +42,7 @@ app.post('/save-deal', async (req, res) => {
 });
 
 app.get('/', (req, res) => {
-    res.json({ message: "API is working!" });
+    // res.json({ message: "API is working!" });
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
