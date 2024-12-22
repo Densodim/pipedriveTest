@@ -40,7 +40,11 @@ app.post('/save-deal', async (req, res) => {
     }
 });
 
-app.get('/', async (req, res) => {
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+app.get('/api', async (req, res) => {
     try {
         // Создаём клиент API
         const apiClient = new pipedrive.ApiClient();
