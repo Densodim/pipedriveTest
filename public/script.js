@@ -24,7 +24,7 @@ document.getElementById('submit').addEventListener('click', () => {
         endTime: document.getElementById('end-time').value,
     };
 
-    fetch('http://localhost:1800/save-deal', {
+    fetch('/save-deal', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ client, job, location, schedule }),
