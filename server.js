@@ -41,6 +41,7 @@ app.post('/save-deal', async (req, res) => {
 });
 
 app.get('/', (req, res) => {
+    res.json({ message: "API is working!" });
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
