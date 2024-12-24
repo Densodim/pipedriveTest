@@ -93,85 +93,10 @@ app.get('/api', async (req, res) => {
         });
     }
 });
+
 app.get('/sidepanel', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'sidepanel.html'));
+    res.sendFile(path.resolve(__dirname, '../public/sidepanel.html'));
 });
-// app.get('/modal', (req, res) => {
-//     res.sendFile(path.join(__dirname, 'public', 'modal.html'));
-// });
-// app.get('/settings', (req, res) => {
-//     res.sendFile(path.join(__dirname, 'public', 'settings.html'));
-// });
-
-// const apiClient = new pipedrive.ApiClient();
-// apiClient.authentications.api_key.apiKey = process.env.API_TOKEN;
-// const extensionsApi = new pipedrive.ExtensionsApi(apiClient);
-//
-// const createSidebarExtension = async () => {
-//     try {
-//         const extension = {
-//             name: "My App Sidebar",
-//             type: "sidebar_panel",
-//             content_url: "https://yourapp.com/sidepanel", // URL для боковой панели
-//             triggers: [
-//                 {
-//                     event: "open_deal",
-//                     action: "show_sidebar",
-//                 }
-//             ],
-//         };
-//
-//         await extensionsApi.createExtension(extension);
-//         console.log('Sidebar extension created successfully');
-//     } catch (error) {
-//         console.error('Error creating sidebar extension:', error);
-//     }
-// };
-//
-// createSidebarExtension();
-//
-// const createModalExtension = async () => {
-//     try {
-//         const extension = {
-//             name: "My App Modal",
-//             type: "modal",
-//             content_url: "https://yourapp.com/modal", // URL для модального окна
-//             triggers: [
-//                 {
-//                     event: "create_deal",
-//                     action: "show_modal",
-//                 }
-//             ],
-//         };
-//
-//         await extensionsApi.createExtension(extension);
-//         console.log('Modal extension created successfully');
-//     } catch (error) {
-//         console.error('Error creating modal extension:', error);
-//     }
-// };
-//
-// createModalExtension();
-//
-//
-// const createSettingsExtension = async () => {
-//     try {
-//         const extension = {
-//             name: "App Settings",
-//             type: "settings_page",
-//             content_url: "https://yourapp.com/settings", // URL для страницы настроек
-//         };
-//
-//         await extensionsApi.createExtension(extension);
-//         console.log('Settings extension created successfully');
-//     } catch (error) {
-//         console.error('Error creating settings extension:', error);
-//     }
-// };
-//
-// createSettingsExtension();
-
-
 
 
 app.listen(PORT, () => {
