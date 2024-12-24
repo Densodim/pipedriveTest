@@ -41,6 +41,27 @@ app.post('/save-deal', async (req, res) => {
     }
 });
 
+app.post('/save-note', async (req, res) => {
+    const { dealId, noteContent } = req.body;
+
+    const apiClient = new pipedrive.ApiClient();
+    apiClient.authentications.api_key.apiKey = process.env.API_TOKEN;
+
+    const notesApi = new pipedrive.NotesApi(apiClient);
+
+    try {
+        const note = await notesApi.addNote({
+            content: noteContent,
+            deal_id: dealId,
+        });
+
+        res.status(200).json({ message: 'Note added successfully!', note });
+    } catch (error) {
+        console.error('Error adding note:', error.message);
+        res.status(500).json({ error: 'Failed to add note!' });
+    }
+});
+
 app.get('/', (req, res) => {
     // res.json({ message: "API is working!" });
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
@@ -72,6 +93,86 @@ app.get('/api', async (req, res) => {
         });
     }
 });
+app.get('/sidepanel', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'sidepanel.html'));
+});
+app.get('/modal', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'modal.html'));
+});
+app.get('/settings', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'settings.html'));
+});
+
+const apiClient = new pipedrive.ApiClient();
+apiClient.authentications.api_key.apiKey = process.env.API_TOKEN;
+const extensionsApi = new pipedrive.ExtensionsApi(apiClient);
+
+const createSidebarExtension = async () => {
+    try {
+        const extension = {
+            name: "My App Sidebar",
+            type: "sidebar_panel",
+            content_url: "https://yourapp.com/sidepanel", // URL для боковой панели
+            triggers: [
+                {
+                    event: "open_deal",
+                    action: "show_sidebar",
+                }
+            ],
+        };
+
+        await extensionsApi.createExtension(extension);
+        console.log('Sidebar extension created successfully');
+    } catch (error) {
+        console.error('Error creating sidebar extension:', error);
+    }
+};
+
+createSidebarExtension();
+
+const createModalExtension = async () => {
+    try {
+        const extension = {
+            name: "My App Modal",
+            type: "modal",
+            content_url: "https://yourapp.com/modal", // URL для модального окна
+            triggers: [
+                {
+                    event: "create_deal",
+                    action: "show_modal",
+                }
+            ],
+        };
+
+        await extensionsApi.createExtension(extension);
+        console.log('Modal extension created successfully');
+    } catch (error) {
+        console.error('Error creating modal extension:', error);
+    }
+};
+
+createModalExtension();
+
+
+const createSettingsExtension = async () => {
+    try {
+        const extension = {
+            name: "App Settings",
+            type: "settings_page",
+            content_url: "https://yourapp.com/settings", // URL для страницы настроек
+        };
+
+        await extensionsApi.createExtension(extension);
+        console.log('Settings extension created successfully');
+    } catch (error) {
+        console.error('Error creating settings extension:', error);
+    }
+};
+
+createSettingsExtension();
+
+
+
 
 app.listen(PORT, () => {
     console.log(`Server run PORT: ${PORT}`);

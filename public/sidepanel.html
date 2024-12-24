@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Deal</title>
+    <script src="https://cdn.jsdelivr.net/npm/pipedrive-client@10"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        input, button {
+            margin: 10px 0;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+<h1>Add New Deal</h1>
+<form id="add-deal-form">
+    <input type="text" id="deal-title" placeholder="Deal Title" required />
+    <input type="number" id="deal-value" placeholder="Deal Value" required />
+    <input type="text" id="deal-stage" placeholder="Deal Stage" required />
+    <button type="submit">Add Deal</button>
+</form>
+<script>
+    const form = document.getElementById('add-deal-form');
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const title = document.getElementById('deal-title').value;
+        const value = document.getElementById('deal-value').value;
+        const stage = document.getElementById('deal-stage').value;
+
+        try {
+            const response = await fetch('/save-note', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ title, value, stage }),
+            });
+
+            if (response.ok) {
+                alert('Deal added successfully!');
+                form.reset();
+            } else {
+                alert('Failed to add deal!');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error adding deal!');
+        }
+    });
+</script>
+</body>
+</html>
